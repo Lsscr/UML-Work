@@ -6,8 +6,10 @@ interface IAnyObj {
 }
 
 interface FcResponse<T> {
+  code: number;
   errno: string;
   errmsg: string;
+  msg: AppContext;
   data: T;
 }
 

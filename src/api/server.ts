@@ -17,8 +17,8 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use(
   (response) => {
     if (response.status !== 200) return Promise.reject(response.data);
-    handleAuthError(response.data.errno);
-    handleGeneralError(response.data.errno, response.data.errmsg);
+    handleAuthError(response.data.code);
+    handleGeneralError(response.data.code, response.data.msg);
     return response;
   },
   (err) => {

@@ -22,6 +22,9 @@ import { api } from '../api/index';
 
 <script setup lang="ts">
 import { api } from '@/api';
+import { useUserStore } from '@/store/userStore'
+import { ElMessage } from 'element-plus';
+const router = useRouter()
 const form = ref()
 const formData = reactive({
     username: '',
@@ -31,10 +34,17 @@ const rules = {
     username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
     password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
 }
+const userStore = useUserStore()
 const login = async () => {
     // 处理登录逻辑
     const [e, r] = await api.userLogin(formData)
-    console.log(e, r)
+    if (!e && r && r.code == 200) {
+        ElMessage({
+            message: '登录成功',
+            type: 'success'
+        })
+        router.push('/')
+    }
 }
 </script>
 
