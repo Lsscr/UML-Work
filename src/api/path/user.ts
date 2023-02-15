@@ -1,11 +1,12 @@
-import { Get } from "../server";
+import { Post } from "../server";
 
-function getUserInfo<T extends { id: string; name: string }>(
-  id
-): ApiResponse<T> {
-  return Get<T>("/user/info", { userid: id });
+function userLogin<T extends { id: string; name: string }>({
+  username,
+  password,
+}): ApiResponse<T> {
+  return Post<T>("api/user/login", { username, password });
 }
 
 export const userApi = {
-  getUserInfo,
+  userLogin,
 };

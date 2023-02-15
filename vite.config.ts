@@ -40,5 +40,20 @@ export default defineConfig({
       "@": _resolve("src"),
     },
   },
-  define: { "process.env": {} },
+  define: {
+    "process.env": {
+      NDOE_ENV: "development",
+      BABASE_URL: "//121.4.146.92:8080/",
+    },
+  },
+  server: {
+    port: 8080,
+    proxy: {
+      '/api': {
+        target: 'http://121.4.146.92:8080/',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '') // 不可以省略rewrite
+      }
+    }
+  }
 });

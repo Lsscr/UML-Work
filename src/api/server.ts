@@ -8,8 +8,6 @@ import {
   handleNetworkError,
 } from "./tools";
 
-axios.defaults.baseURL = process.env.BASE_URL;
-
 axios.interceptors.request.use((config) => {
   config = handleChangeRequestHeader(config);
   config = handleConfigureAuth(config);

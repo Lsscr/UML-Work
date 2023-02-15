@@ -1,15 +1,16 @@
+import { api } from '../api/index';
 <template>
     <div class="login" h="screen">
         <el-card class="login-card">
             <div class="logo">
                 <img src="your-logo.png" alt="logo">
             </div>
-            <el-form ref="form" :model="form" :rules="rules" label-width="80px" class="login-form">
+            <el-form ref="form" :model="formData" :rules="rules" label-width="80px" class="login-form">
                 <el-form-item label="用户名" prop="username">
-                    <el-input v-model.trim="form.username" placeholder="请输入用户名"></el-input>
+                    <el-input v-model.trim="formData.username" placeholder="请输入用户名"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="password">
-                    <el-input v-model.trim="form.password" type="password" placeholder="请输入密码"></el-input>
+                    <el-input v-model.trim="formData.password" type="password" placeholder="请输入密码"></el-input>
                 </el-form-item>
                 <el-form-item class="flex">
                     <el-button type="primary" class="ml-22" @click="login">登录</el-button>
@@ -20,7 +21,9 @@
 </template>
 
 <script setup lang="ts">
-const form = reactive({
+import { api } from '@/api';
+const form = ref()
+const formData = reactive({
     username: '',
     password: ''
 })
@@ -28,8 +31,10 @@ const rules = {
     username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
     password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
 }
-const login = () => {
+const login = async () => {
     // 处理登录逻辑
+    const [e, r] = await api.userLogin(formData)
+    console.log(e, r)
 }
 </script>
 
