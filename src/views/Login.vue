@@ -39,6 +39,7 @@ const login = async () => {
     // 处理登录逻辑
     const [e, r] = await api.userLogin(formData)
     if (!e && r && r.code == 200) {
+        userStore.userInfoObj = r.data
         ElMessage({
             message: '登录成功',
             type: 'success'
