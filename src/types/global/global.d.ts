@@ -14,3 +14,6 @@ interface FcResponse<T> {
 }
 
 type ApiResponse<T> = Promise<[any, FcResponse<T> | undefined]>;
+
+// news-Type
+

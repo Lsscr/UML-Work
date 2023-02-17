@@ -9,7 +9,12 @@ export const theme = {
   },
 };
 
-export const unocssPresets = [presetUno(), presetAttributify(), presetIcons()];
+export const unocssPresets = [presetUno(), presetAttributify(), presetIcons({
+  collections: {
+    carbon: () =>
+      import('@iconify-json/carbon').then((i) => i.icons as any)
+  }
+})]
 
 export default defineConfig({
   presets: unocssPresets,

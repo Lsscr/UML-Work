@@ -7,6 +7,9 @@ import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import path from "path";
+import IconsResolver from "unplugin-icons/resolver";
+import Icons from "unplugin-icons/vite";
+
 function _resolve(dir: string) {
   return path.resolve(__dirname, dir);
 }
@@ -22,7 +25,14 @@ export default defineConfig({
     AutoImport({
       dts: "./src/types/global/auto-import.d.ts",
       imports: ["vue", "vue-router"],
-      resolvers: [ElementPlusResolver()],
+      resolvers: [
+        ElementPlusResolver(),
+        // Auto import icon components
+        // 自动导入图标组件
+        IconsResolver({
+          prefix: "Icon",
+        }),
+      ],
     }),
     Components({
       dts: "./src/types/global/auto-components.d.ts",
@@ -31,8 +41,20 @@ export default defineConfig({
       dirs: ["src/components/"],
       // 配置需要将哪些后缀类型的文件进行自动按需引入
       extensions: ["vue"],
-      resolvers: [ElementPlusResolver()],
+      resolvers: [
+        // Auto register icon components
+        // 自动注册图标组件
+        IconsResolver({
+          enabledCollections: ["ep"],
+        }),
+        // Auto register Element Plus components
+        // 自动导入 Element Plus 组件
+        ElementPlusResolver(),
+      ],
     }),
+    Icons({
+      autoInstall: true,
+    })
   ],
   // 配置项目别名
   resolve: {
@@ -49,11 +71,11 @@ export default defineConfig({
   server: {
     port: 8080,
     proxy: {
-      '/api': {
-        target: 'http://121.4.146.92:8080/',
+      "/api": {
+        target: "http://121.4.146.92:8080/",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '') // 不可以省略rewrite
-      }
-    }
-  }
+        rewrite: (path) => path.replace(/^\/api/, ""), // 不可以省略rewrite
+      },
+    },
+  },
 });
