@@ -54,7 +54,7 @@ const fetchNewsList = async () => {
     }
 }
 
-const handleCommand = (category) => {
+const handleCommand = (category: any) => {
     currentCategory.value = category
     fetchNewsList()
 }
