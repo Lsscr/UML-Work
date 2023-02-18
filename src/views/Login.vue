@@ -64,7 +64,7 @@ const login = async () => {
             message: '登录成功',
             type: 'success'
         })
-        router.push('/')
+        router.push('/news')
     }
 }
 </script>

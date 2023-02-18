@@ -1,11 +1,11 @@
 import { ElMessage } from "element-plus";
 
-export const handleChangeRequestHeader = (config) => {
+export const handleChangeRequestHeader = (config: any) => {
   config["xxxx"] = "xxx";
   return config;
 };
 
-export const handleConfigureAuth = (config) => {
+export const handleConfigureAuth = (config: any) => {
   config.headers["token"] = localStorage.getItem("token") || "";
   return config;
 };

@@ -74,7 +74,7 @@ export default defineConfig({
       "/api": {
         target: "http://121.4.146.92:8080/",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""), // 不可以省略rewrite
+        rewrite: (path) => path.replace(/^\/api/, "http://121.4.146.92:8080/"), // 不可以省略rewrite
       },
     },
   },

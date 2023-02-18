@@ -24,15 +24,15 @@ import NewsCard from '@/components/NewsCard.vue';
 type NewsItemType = {
     "classifyId"?: string,
     "code"?: string,
-    "createTime"?: string,
+    "createTime"?: any,
     "createUser"?: number,
-    "description"?: string,
-    "id"?: string
-    "image"?: string,
+    "description"?: any,
+    "id"?: any
+    "image"?: any,
     "sort"?: number,
     "status"?: number,
-    "title"?: string,
-    "updateTime"?: string,
+    "title"?: any,
+    "updateTime"?: any,
     "updateUser"?: number
 }
 
@@ -59,7 +59,7 @@ const handleCommand = (category: any) => {
     fetchNewsList()
 }
 
-const handleClick = (id) => {
+const handleClick = (id: any) => {
     console.log(id)
 }
 
