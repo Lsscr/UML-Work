@@ -54,7 +54,7 @@ export default defineConfig({
     }),
     Icons({
       autoInstall: true,
-    })
+    }),
   ],
   // 配置项目别名
   resolve: {
@@ -69,7 +69,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: 8080,
+    port: 8089,
     proxy: {
       "/api": {
         target: "http://121.4.146.92:8080/",
