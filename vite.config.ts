@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import UnoCSS from "unoCSS/vite";
-import { presetUno, presetAttributify, presetIcons } from "unoCSS";
+import UnoCSS from "unocss/vite";
+import { presetUno, presetAttributify, presetIcons } from "unocss";
 import uncossConfig from "./unocss.config";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
@@ -70,6 +70,7 @@ export default defineConfig({
   },
   server: {
     port: 8089,
+    host: true,
     proxy: {
       "/api": {
         target: "http://121.4.146.92:8080/",
