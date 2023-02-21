@@ -18,6 +18,10 @@ function getNewsList<T extends NewsItemType>({
   return Get<T>("api/news/list", { page, pageSize });
 }
 
+function getNewCategoryList<T extends NewsCategoryData>() {
+
+}
+
 export const newsApi = {
   getNewsList,
 };

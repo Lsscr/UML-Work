@@ -21,21 +21,6 @@
 import { api } from "@/api"
 import NewsCard from '@/components/NewsCard.vue';
 
-type NewsItemType = {
-    "classifyId"?: string,
-    "code"?: string,
-    "createTime"?: string,
-    "createUser"?: number,
-    "description"?: string,
-    "id"?: string
-    "image"?: string,
-    "sort"?: number,
-    "status"?: number,
-    "title"?: string,
-    "updateTime"?: string,
-    "updateUser"?: number
-}
-
 const newsList = ref<NewsItemType[]>([])
 const categories = ref([
     { id: 1, label: '全部' },

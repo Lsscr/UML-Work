@@ -1,19 +1,25 @@
 <template>
-    <div class="news-detail">
-        <el-breadcrumb separator=">">
-            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item :to="{ path: '/news' }">新闻</el-breadcrumb-item>
-            <el-breadcrumb-item>新闻详情</el-breadcrumb-item>
-        </el-breadcrumb>
-        <div class="news-header">
-            <h1 class="news-title">{{ news.title }}</h1>
-            <div class="news-info">
-                <span class="news-date">{{ news.date }}</span>
-                <span class="news-source">来源：{{ news.source }}</span>
-            </div>
-        </div>
+    <div>
+        <el-page-header>
+            <template #breadcrumb>
+                <el-breadcrumb class="news-detail" separator=">">
+                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+                    <el-breadcrumb-item :to="{ path: '/news' }">新闻</el-breadcrumb-item>
+                    <el-breadcrumb-item>新闻详情</el-breadcrumb-item>
+                </el-breadcrumb>
+            </template>
+            <template #content>
+                <div class="news-header">
+                    <h1 class="news-title">{{ news.title }}</h1>
+                    <div class="news-info">
+                        <span class="news-date">{{ news.date }}</span>
+                        <span class="news-source">来源：{{ news.source }}</span>
+                    </div>
+                </div>
+            </template>
+        </el-page-header>
         <div class="news-content" v-html="news.content"></div>
-</div>
+    </div>
 </template>
 
 <script setup lang="ts">

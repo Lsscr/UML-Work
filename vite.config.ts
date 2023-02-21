@@ -23,7 +23,7 @@ export default defineConfig({
       presets: [presetUno(), presetAttributify(), presetIcons()],
     }),
     AutoImport({
-      dts: "./src/types/global/auto-import.d.ts",
+      dts: "./src/types/auto-import.d.ts",
       imports: ["vue", "vue-router"],
       resolvers: [
         ElementPlusResolver(),
@@ -35,7 +35,7 @@ export default defineConfig({
       ],
     }),
     Components({
-      dts: "./src/types/global/auto-components.d.ts",
+      dts: "./src/types/auto-components.d.ts",
       // dirs 指定组件所在位置，默认为 src/components
       // 可以让我们使用自己定义组件的时候免去 import 的麻烦
       dirs: ["src/components/"],

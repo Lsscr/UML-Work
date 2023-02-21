@@ -10,14 +10,21 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
-    "types": ["element-plus/global","@types/node"],
+    "types": ["element-plus/global", "@types/node"],
     "skipLibCheck": true,
     "noEmit": true,
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"],
+      "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/theme/resetCSS.css"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/theme/resetCSS.css",
+    "src/types/*.d.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
