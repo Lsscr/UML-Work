@@ -20,6 +20,7 @@
 <script setup lang="ts">
 import { api } from "@/api"
 import NewsCard from '@/components/NewsCard.vue';
+import { NewsItemType } from "@/types/globals";
 
 const newsList = ref<NewsItemType[]>([])
 const categories = ref([

@@ -10,7 +10,7 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
-    "types": ["element-plus/global", "@types/node"],
+    "types": ["element-plus/global", "@types/node", "pinia-plugin-persist"],
     "skipLibCheck": true,
     "noEmit": true,
     "baseUrl": "./",

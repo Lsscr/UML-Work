@@ -44,6 +44,7 @@ import { api } from '../api/index';
 import { api } from '@/api';
 import { useUserStore } from '@/store/userStore'
 import { ElMessage } from 'element-plus';
+import { setSessionState } from '../utils/seesionStore';
 const router = useRouter()
 const form = ref()
 const formData = reactive({
@@ -60,6 +61,7 @@ const login = async () => {
     const [e, r] = await api.userLogin(formData)
     if (!e && r && r.code == 200) {
         userStore.userInfoObj = r.data
+        setSessionState('role',r.data.username)
         ElMessage({
             message: '登录成功',
             type: 'success'
