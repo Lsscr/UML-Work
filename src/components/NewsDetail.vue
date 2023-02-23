@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <el-page-header>
+    <div class="pl-20% pr-20%">
+        <el-page-header class="bg-white" @back="$router.go(-1)">
             <template #breadcrumb>
                 <el-breadcrumb class="news-detail" separator=">">
                     <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
@@ -8,17 +8,18 @@
                     <el-breadcrumb-item>新闻详情</el-breadcrumb-item>
                 </el-breadcrumb>
             </template>
-            <template #content>
-                <div class="news-header">
-                    <h1 class="news-title">{{ news.title }}</h1>
-                    <div class="news-info">
-                        <span class="news-date">{{ news.date }}</span>
-                        <span class="news-source">来源：{{ news.source }}</span>
-                    </div>
+            <template class="ml-4" #content>
+                <div>
+                    <h1>{{ news.title }}</h1>
                 </div>
             </template>
+            <div class="min-h-50 m-4 flex items-start text-[1.23rem]" v-html="news.content"></div>
+            <div class="news-info flex items-start justify-between w-230px ml-4">
+                <span>{{ news.date }}</span>
+                <span>来源：{{ news.source }}</span>
+            </div>
         </el-page-header>
-        <div class="news-content" v-html="news.content"></div>
+        <CommentBox />
     </div>
 </template>
 
@@ -27,18 +28,22 @@ const news = defineProps({
     title: {
         type: String,
         required: true,
+        defualt: '测试标题'
     },
     date: {
         type: String,
         required: true,
+        defualt: '测试标题'
     },
     source: {
         type: String,
         required: true,
+        defualt: '测试标题'
     },
     content: {
         type: String,
         required: true,
+        defualt: '测试标题'
     },
 })
 </script>
@@ -52,6 +57,9 @@ const news = defineProps({
 
 .news-header {
     margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .news-title {

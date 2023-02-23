@@ -1,6 +1,6 @@
 <template>
     <div class="news-form">
-        <el-form ref="formRef" :model="formData" label-width="120px" size="large">
+        <el-form ref="formRef" :model="formData" label-width="70px" size="large">
             <el-form-item label="标题" class="form-item">
                 <el-input v-model="formData.title" placeholder="请输入标题"></el-input>
             </el-form-item>
@@ -17,7 +17,7 @@
                 <el-upload class="upload-demo" action="//jsonplaceholder.typicode.com/posts/"
                     v-model:file-list="formData.fileList" multiple :limit="3" :on-preview="handlePreview"
                     :on-remove="handleRemove" :on-exceed="handleExceed" :before-remove="beforeRemove"
-                    :on-success="handleSuccess" :on-error="handleError" :auto-upload="false">
+                    :on-success="handleSuccess" :on-error="handleError" :auto-upload="false" list-type="picture">
                     <el-button size="small" type="primary">点击上传</el-button>
                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
@@ -27,7 +27,7 @@
                 <el-button @click="resetForm(formRef)">重置</el-button>
             </el-form-item>
         </el-form>
-</div>
+    </div>
 </template>
   
 <script setup lang="ts">
@@ -108,9 +108,7 @@ const resetForm = (elformRef: FormInstance | undefined) => {
 
 <style scoped>
 .news-form {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+    max-width: 500px;
 }
 
 .form-item {

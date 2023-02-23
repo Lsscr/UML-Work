@@ -8,56 +8,30 @@
             </div>
         </div>
         <div class="news-list-container">
-            <template v-for="items in newsList">
+            <template v-for="items in newsListData">
                 <NewsCard :title="items.title" :id="items.id" :content="items.description" :image="items.image"
-                    :date="items.createTime" @click="handleClick"></NewsCard>
+                    :date="items.createTime"
+                    @click="$router.push({ name: 'NewsDetail', params: { id: items.id, title: items.title, date: items.createTime, source: items.source, content: items.description } })">
+                </NewsCard>
             </template>
-            <div v-if="newsList.length === 0" class="no-data">暂无数据</div>
+            <div v-if="newsListData.length === 0" class="no-data">暂无数据</div>
         </div>
-</div>
+    </div>
 </template>
   
 <script setup lang="ts">
-import { api } from "@/api"
 import NewsCard from '@/components/NewsCard.vue';
 import { NewsItemType } from "@/types/globals";
 
-const newsList = ref<NewsItemType[]>([])
-const categories = ref([
-    { id: 1, label: '全部' },
-    { id: 2, label: '国内' },
-    { id: 3, label: '国际' },
-    { id: 4, label: '社会' }
-])
-const currentCategory = ref(categories.value[0])
-
-const fetchNewsList = async () => {
-    // 使用异步请求获取新闻列表数据，例如：
-    const [e, r] = await api.getNewsList({ page: 1, pageSize: 10 })
-    if (!e && r) {
-        newsList.value = r?.data.records as NewsItemType[]
-        console.log(newsList.value)
-    }
-}
-
-const handleCommand = (category) => {
-    currentCategory.value = category
-    fetchNewsList()
-}
-
-const handleClick = (id) => {
-    console.log(id)
-}
-
-onMounted(() => {
-    fetchNewsList()
-})
-
+const props = defineProps<{
+    newsListData: NewsItemType
+}>()
+console.log("props" + props.newsListData)
 </script>
   
 <style scoped>
 .news-list {
-    max-width: 1200px;
+    max-width: 1240px;
     margin: 0 auto;
     padding: 20px;
     height: 100%;

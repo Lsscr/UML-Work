@@ -9,6 +9,7 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import path from "path";
 import IconsResolver from "unplugin-icons/resolver";
 import Icons from "unplugin-icons/vite";
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 
 function _resolve(dir: string) {
   return path.resolve(__dirname, dir);
@@ -27,6 +28,7 @@ export default defineConfig({
       imports: ["vue", "vue-router"],
       resolvers: [
         ElementPlusResolver(),
+        AntDesignVueResolver(),
         // Auto import icon components
         // 自动导入图标组件
         IconsResolver({
@@ -50,6 +52,7 @@ export default defineConfig({
         // Auto register Element Plus components
         // 自动导入 Element Plus 组件
         ElementPlusResolver(),
+        AntDesignVueResolver()
       ],
     }),
     Icons({

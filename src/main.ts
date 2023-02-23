@@ -8,6 +8,7 @@ import "@/theme/resetCSS.css";
 import "element-plus/dist/index.css";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import piniaPersist from "pinia-plugin-persist";
+import "ant-design-vue/dist/antd.css";
 
 const app = createApp(App);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
