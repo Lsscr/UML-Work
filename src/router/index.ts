@@ -4,7 +4,35 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "Home",
+    redirect: "/homepage",
     component: () => import("@/views/Index.vue"),
+    children: [
+      {
+        path: "/homepage",
+        name: "Homepage",
+        component: () => import("@/components/Homepage.vue"),
+      },
+      {
+        path: "/entertainmentNews",
+        name: "EntertainmentNews",
+        component: () => import("@/components/EntertainmentNews.vue"),
+      },
+      {
+        path: "/legalNews",
+        name: "LegalNews",
+        component: () => import("@/components/LegalNews.vue"),
+      },
+      {
+        path: "/militaryNews",
+        name: "MilitaryNews",
+        component: () => import("@/components/MilitaryNews.vue"),
+      },
+      {
+        path: "/schoolNews",
+        name: "SchoolNews",
+        component: () => import("@/components/SchoolNews.vue"),
+      },
+    ],
   },
   {
     path: "/news",

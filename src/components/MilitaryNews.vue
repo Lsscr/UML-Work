@@ -1,8 +1,8 @@
 <template>
-    {{ $route.params.urlid }}
+
     <div class="news-list">
         <div class="news-header">
-            <h1 class="news-title">新闻列表</h1>
+            <h1 class="news-title">军事新闻</h1>
             <div m2 flex justify-center text-2xl op60 hover="op90">
                 <router-link to='/' class="i-carbon-arrow-left ">
                 </router-link>
@@ -24,17 +24,17 @@
 import NewsCard from '@/components/NewsCard.vue';
 import { api } from '@/api'
 import { NewsItemType } from "@/types/globals";
-import { useRoute } from 'vue-router';
-
-const props = defineProps<{
-    newsListData?: NewsItemType
-}>()
-const route = useRoute()
-
-let newsGetData: NewsItemType;
+const newsListData = ref([])
+const fetchNewsList = async () => {
+    // 使用异步请求获取新闻列表数据，例如：
+    const [e, r] = await api.getNewsByCategory({ classifyId: "1621473779682844673" })
+    if (!e && r) {
+        newsListData.value = r?.data as NewsItemType[]
+    }
+}
 
 onMounted(() => {
-
+    fetchNewsList()
 })
 </script>
   

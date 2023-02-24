@@ -1,23 +1,31 @@
 <template>
     <div class="news-form">
         <el-form ref="formRef" :model="formData" label-width="70px" size="large">
-            <el-form-item label="标题" class="form-item">
+            <el-form-item label="新闻标题" class="form-item">
                 <el-input v-model="formData.title" placeholder="请输入标题"></el-input>
             </el-form-item>
-            <el-form-item label="作者" class="form-item">
-                <el-input v-model="formData.author" placeholder="请输入作者"></el-input>
+            <el-form-item label="新闻作者" class="form-item">
+                <el-input v-model="formData.news_detail.author" placeholder="请输入作者"></el-input>
             </el-form-item>
-            <el-form-item label="发布时间" class="form-item">
-                <el-date-picker v-model="formData.date" type="datetime" placeholder="选择日期时间"></el-date-picker>
+            <el-form-item label="新闻来源" class="form-item">
+                <el-input v-model="formData.news_detail.source" placeholder="请输入作者"></el-input>
+            </el-form-item>
+            <el-form-item label="发布类型">
+                <el-select v-model="formData.classify_id" placeholder="选择类型">
+                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+                </el-select>
+            </el-form-item>
+            <el-form-item label="简单描述" class="form-item">
+                <el-input v-model="formData.description" placeholder="描述一下"></el-input>
             </el-form-item>
             <el-form-item label="内容" class="form-item">
-                <el-input type="textarea" v-model="formData.content" placeholder="请输入内容"></el-input>
+                <el-input type="textarea" v-model="formData.news_detail.main_body" placeholder="请输入内容"></el-input>
             </el-form-item>
             <el-form-item label="封面图片" class="form-item">
-                <el-upload class="upload-demo" action="//jsonplaceholder.typicode.com/posts/"
-                    v-model:file-list="formData.fileList" multiple :limit="3" :on-preview="handlePreview"
+                <el-upload class="upload-demo" action="http://121.4.146.92:8080/common/upload" ref="uploadRef"
+                    v-model:file-list="formData.fileList" multiple :limit="1" :on-preview="handlePreview"
                     :on-remove="handleRemove" :on-exceed="handleExceed" :before-remove="beforeRemove"
-                    :on-success="handleSuccess" :on-error="handleError" :auto-upload="false" list-type="picture">
+                    :on-change="handleChange" :auto-upload="false" list-type="picture">
                     <el-button size="small" type="primary">点击上传</el-button>
                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
@@ -31,26 +39,65 @@
 </template>
   
 <script setup lang="ts">
-import type { FormInstance, UploadUserFile, UploadProps } from 'element-plus';
+import type { FormInstance, UploadUserFile, UploadProps, UploadInstance } from 'element-plus';
 import {
     ElMessage, ElMessageBox
 } from 'element-plus';
+import { api } from '@/api'
 
+defineProps(['modelValue'])
+const emit = defineEmits(['update:modelValue'])
+
+const uploadRef = ref<UploadInstance>()
 const formRef = ref<FormInstance>()
 const formData = reactive<{
     title: string,
-    author: string,
-    date: string,
+    classify_id: string,
+    description: string,
+    sort?: number,
     content: string,
-    fileList: UploadUserFile[]
+    image: string,
+    fileList: UploadUserFile[],
+    news_details: Record<string, string>[],
+    news_detail: {
+        source: string,
+        author: string,
+        main_body: string
+    }
 }>({
     title: '',
-    author: '',
-    date: '',
+    classify_id: '',
+    description: '',
+    sort: 10,
     content: '',
+    image: '',
     fileList: [],
+    news_details: [],
+    news_detail: {
+        source: '',
+        author: '',
+        main_body: ''
+    }
 })
 
+const options = [
+    {
+        value: '1621144972673384450',
+        label: '法律新闻',
+    },
+    {
+        value: '1621148934742949890',
+        label: '娱乐新闻',
+    },
+    {
+        value: '1621152644667772929',
+        label: '学校新闻',
+    },
+    {
+        value: '1621473779682844673',
+        label: '军事新闻',
+    }
+]
 
 const handlePreview: UploadProps['onPreview'] = (uploadFile) => {
     console.log(uploadFile)
@@ -61,7 +108,7 @@ const handleRemove: UploadProps['onRemove'] = (file, uploadFiles) => {
 }
 const beforeRemove: UploadProps['beforeRemove'] = (uploadFile, uploadFiles) => {
     return ElMessageBox.confirm(
-        `Cancel the transfert of ${uploadFile.name} ?`
+        `取消上传的图片 ${uploadFile.name} ?`
     ).then(
         () => true,
         () => false
@@ -70,31 +117,32 @@ const beforeRemove: UploadProps['beforeRemove'] = (uploadFile, uploadFiles) => {
 
 const handleExceed: UploadProps['onExceed'] = (files, uploadFiles) => {
     ElMessage.warning(
-        `The limit is 3, you selected ${files.length} files this time, add up to ${files.length + uploadFiles.length
-        } totally`
+        `选择超过上限,请删除已选择的图片后在上传`
     )
 }
 
-const handleSuccess: UploadProps['onSuccess'] = (response, file, fileList) => {
-    console.log('handleSuccess', response, file, fileList);
+const handleChange: UploadProps['onChange'] = (files, uploadFiles) => {
+    formData.image = uploadFiles[0].name
 }
 
-const handleError: UploadProps['onError'] = (error, file, fileList) => {
-    console.log('handleError', error, file, fileList);
-}
 
 const submitForm = (elformRef: FormInstance | undefined) => {
     if (!elformRef) return
-    elformRef.validate((valid) => {
+    elformRef.validate(async (valid) => {
         if (valid) {
-            ElMessage({
-                type: 'success',
-                message: '发布成功'
-            })
-            elformRef.resetFields()
+            formData.news_details.push(formData.news_detail)
+            uploadRef.value?.submit()
+            const [e, r] = await api.newAdd(formData)
+            if (!e && r) {
+                emit('update:modelValue', false)
+                ElMessage({
+                    type: 'success',
+                    message: '发布成功'
+                })
+                elformRef.resetFields()
+            }
             // 在这里调用接口或其他逻辑来提交表单数据
         } else {
-            console.log('validate failed');
             return false;
         }
     });

@@ -13,10 +13,10 @@
                     <h1>{{ news.title }}</h1>
                 </div>
             </template>
-            <div class="min-h-50 m-4 flex items-start text-[1.23rem]" v-html="news.content"></div>
-            <div class="news-info flex items-start justify-between w-230px ml-4">
-                <span>{{ news.date }}</span>
-                <span>来源：{{ news.source }}</span>
+            <p class="min-h-50 m-4 text-left indent text-[1.23rem]">{{ newdata.mainBody }}</p>
+            <div class="news-info flex items-start justify-between w-300px ml-4">
+                <span class="min-w-140px">{{ newdata.createTime }}</span>
+                <span class="min-w-120px">来源：{{ newdata.source }}</span>
             </div>
         </el-page-header>
         <CommentBox />
@@ -24,27 +24,34 @@
 </template>
 
 <script setup lang="ts">
+import { api } from '@/api'
+import { useRoute } from 'vue-router';
+const router = useRoute()
 const news = defineProps({
+    id: {
+        type: String,
+        required: true,
+    },
+    date: {
+        type: String,
+        required: true,
+    },
     title: {
         type: String,
         required: true,
         defualt: '测试标题'
     },
-    date: {
-        type: String,
-        required: true,
-        defualt: '测试标题'
-    },
-    source: {
-        type: String,
-        required: true,
-        defualt: '测试标题'
-    },
-    content: {
-        type: String,
-        required: true,
-        defualt: '测试标题'
-    },
+})
+let newdata = ref({})
+const getNewsDeail = async () => {
+    const [e, r] = await api.getNewsDetails(router.params.id)
+    if (!e && r) {
+        newdata.value = r.data
+        console.log(newdata)
+    }
+}
+onMounted(() => {
+    getNewsDeail()
 })
 </script>
 

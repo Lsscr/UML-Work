@@ -1,6 +1,8 @@
 <template>
   <div w="screen" class="flex flex-col min-h-100vh InBg">
-    <router-view></router-view>
+    <KeepAlive>
+      <router-view></router-view>
+    </KeepAlive>
   </div>
 </template>
 
