@@ -1,12 +1,16 @@
-import { Get } from "../server"
+import { Get, Post } from "../server";
 
-function getCommentsAllById(id: string) { 
-    return Get("comment",{
-        id
-    });
+function getCommentsAllById(id: string) {
+  return Get("comment", {
+    id,
+  });
 }
 
-
-export const shoporderApi = {
-	getCommentsAllById
+function uploadFileImg(data: any) {
+  return Post("common/upload", data);
 }
+
+export const comment = {
+  getCommentsAllById,
+  uploadFileImg,
+};

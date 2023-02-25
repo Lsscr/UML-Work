@@ -2,10 +2,6 @@
     <div class="news-list">
         <div class="news-header">
             <h1 class="news-title">法律新闻</h1>
-            <div m2 flex justify-center text-2xl op60 hover="op90">
-                <router-link to='/' class="i-carbon-arrow-left ">
-                </router-link>
-            </div>
         </div>
         <div class="news-list-container">
             <template v-for="items in newsListData">

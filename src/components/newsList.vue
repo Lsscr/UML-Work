@@ -22,17 +22,12 @@
   
 <script setup lang="ts">
 import NewsCard from '@/components/NewsCard.vue';
-import { api } from '@/api'
 import { NewsItemType } from "@/types/globals";
 import { useRoute } from 'vue-router';
 
 const props = defineProps<{
     newsListData?: NewsItemType
 }>()
-const route = useRoute()
-
-let newsGetData: NewsItemType;
-
 onMounted(() => {
 
 })
@@ -42,7 +37,7 @@ onMounted(() => {
 .news-list {
     max-width: 1240px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0 20px 20px 20px;
     height: 100%;
 }
 

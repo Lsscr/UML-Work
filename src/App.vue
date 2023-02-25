@@ -1,8 +1,10 @@
 <template>
   <div w="screen" class="flex flex-col min-h-100vh InBg">
-    <KeepAlive>
-      <router-view></router-view>
-    </KeepAlive>
+    <router-view v-slot="{ Component }">
+      <keep-alive>
+        <component :is="Component" />
+      </keep-alive>
+    </router-view>
   </div>
 </template>
 

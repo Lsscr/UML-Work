@@ -1,13 +1,13 @@
 <template>
     <div>
-        <el-menu default-active="/homepage" class="el-menu-demo" mode="horizontal" background-color="#545c64"
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" background-color="#545c64"
             text-color="#fff" active-text-color="#ffd04b" @select="handleSelect">
             <div w="230px" />
-            <el-menu-item index="/homepage" @click="$router.replace('/homepage')"> <el-icon>
+            <el-menu-item index="homepage" @click="$router.replace('/homepage')"> <el-icon>
                     <HomeFilled />
                 </el-icon>首页</el-menu-item>
             <template v-for="(item, index) in category" :key="index + 2">
-                <el-menu-item :index="index + 2"
+                <el-menu-item :index="item.nameUrl"
                     @click="$router.push({ name: item.nameUrl, params: { urlid: item.id } })">{{
                         item.name
                     }}</el-menu-item>
@@ -46,11 +46,14 @@
 <script setup lang="ts">
 import { useUserStore } from '@/store/userStore';
 import NewsAdd from '@/views/NewsAdd.vue'
+import { useIndexStore } from '@/store/index';
 
+const indexStore = useIndexStore()
+const activeIndex = ref<string>(indexStore.activeIndex)
 const userStore = useUserStore()
 const visible = ref<boolean>(false);
 const handleSelect = (key: string, keyPath: string[]) => {
-    console.log(key, keyPath)
+    indexStore.setActiveIndex(key)
 }
 
 let category = ref([

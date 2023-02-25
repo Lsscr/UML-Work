@@ -22,10 +22,10 @@
                 <el-input type="textarea" v-model="formData.news_detail.main_body" placeholder="请输入内容"></el-input>
             </el-form-item>
             <el-form-item label="封面图片" class="form-item">
-                <el-upload class="upload-demo" action="http://121.4.146.92:8080/common/upload" ref="uploadRef"
-                    v-model:file-list="formData.fileList" multiple :limit="1" :on-preview="handlePreview"
-                    :on-remove="handleRemove" :on-exceed="handleExceed" :before-remove="beforeRemove"
-                    :on-change="handleChange" :auto-upload="false" list-type="picture">
+                <el-upload class="upload-demo" :headers="{ 'Access-Control-Allow-Origin': '*' }"
+                    action="http://localhost:8089/api/common/upload" ref="uploadRef" v-model:file-list="formData.fileList"
+                    multiple :limit="1" :on-preview="handlePreview" :on-remove="handleRemove" :on-exceed="handleExceed"
+                    :before-remove="beforeRemove" :auto-upload="false" :on-success="handleSuccess" list-type="picture">
                     <el-button size="small" type="primary">点击上传</el-button>
                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
@@ -121,26 +121,31 @@ const handleExceed: UploadProps['onExceed'] = (files, uploadFiles) => {
     )
 }
 
-const handleChange: UploadProps['onChange'] = (files, uploadFiles) => {
-    formData.image = uploadFiles[0].name
+const handleSuccess: UploadProps['onSuccess'] = (res, file, filelist) => {
+    formData.image = res.data
+    console.log(formData.image)
 }
 
 
 const submitForm = (elformRef: FormInstance | undefined) => {
     if (!elformRef) return
-    elformRef.validate(async (valid) => {
+    elformRef.validate((valid) => {
         if (valid) {
             formData.news_details.push(formData.news_detail)
             uploadRef.value?.submit()
-            const [e, r] = await api.newAdd(formData)
-            if (!e && r) {
-                emit('update:modelValue', false)
-                ElMessage({
-                    type: 'success',
-                    message: '发布成功'
-                })
-                elformRef.resetFields()
-            }
+            setTimeout(async () => {
+                console.log(formData.image)
+                const [e, r] = await api.newAdd(formData)
+                if (!e && r) {
+                    emit('update:modelValue', false)
+                    ElMessage({
+                        type: 'success',
+                        message: '发布成功'
+                    })
+                    elformRef.resetFields()
+                }
+            }, 2000)
+
             // 在这里调用接口或其他逻辑来提交表单数据
         } else {
             return false;

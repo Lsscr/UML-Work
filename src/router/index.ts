@@ -54,12 +54,26 @@ const routes: Array<RouteRecordRaw> = [
     name: "NewsDetail",
     component: () => import("@/components/NewsDetail.vue"),
     props: true,
-  }
+  },
+  {
+    path: "/helloworld",
+    name: "Helloworld",
+    component: () => import("@/components/helloworld.vue"),
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach(async (to, from) => {
+  if (to.name !== "Homepage" && to.name !== "Login") {
+    if (window.sessionStorage.getItem("userStore") == null) {
+      return { name: "Login" };
+    }
+  }
+  return true;
 });
 
 export default router;
