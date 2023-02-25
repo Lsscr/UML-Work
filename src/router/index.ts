@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { ElNotification } from "element-plus";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -70,6 +71,11 @@ const router = createRouter({
 router.beforeEach(async (to, from) => {
   if (to.name !== "Homepage" && to.name !== "Login") {
     if (window.sessionStorage.getItem("userStore") == null) {
+      ElNotification({
+        title: "错误",
+        message: "你还没有登录!",
+        type: "error",
+      });
       return { name: "Login" };
     }
   }
